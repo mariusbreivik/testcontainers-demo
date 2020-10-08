@@ -1,11 +1,16 @@
 
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
   flyway:
     enabled: true
     locations: classpath:db/migration
     schemas: demodb
   datasource:
-    url: jdbc:sqlserver://localhost
+    hikari:
+      validationTimeout: 300000
+    url: jdbc:sqlserver://localhost:1433
     password: MittPassord123!
     username: sa
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

@@ -29,10 +29,13 @@ class TestcontainersDemoApplicationTests {
 
 		@Override
 		public void initialize(@NotNull ConfigurableApplicationContext configurableApplicationContext) {
-			configurableApplicationContext.getEnvironment().getSystemProperties().put("spring.datasource.url", mssqlServerContainer.getJdbcUrl() );
+			mssqlServerContainer.withConnectTimeoutSeconds(24);
+			mssqlServerContainer.addExposedPort(1433);
+
+			configurableApplicationContext.getEnvironment().getSystemProperties().put("spring.datasource.url", mssqlServerContainer.getJdbcUrl() + ":1433" );
 			configurableApplicationContext.getEnvironment().getSystemProperties().put("spring.datasource.username", mssqlServerContainer.getUsername());
 			configurableApplicationContext.getEnvironment().getSystemProperties().put("spring.datasource.password", mssqlServerContainer.getPassword());
-			mssqlServerContainer.withConnectTimeoutSeconds(24);
+
 			mssqlServerContainer.start();
 
 		}
